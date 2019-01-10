@@ -1,3 +1,11 @@
+"""
+This programm is an implementation of bank account management based on json files.
+To generate HTML documentation for this module issue the command:
+
+    pydoc -w bank_management
+
+"""
+
 import requests
 import json
 from decimal import Decimal
@@ -6,6 +14,9 @@ import datetime
 from pathlib import Path
 
 class BankAccount:
+    """
+        The Class Bank Account will create an Bank Account from a JSON file or generate a new one.
+    """
     def __init__(self, name, balance=0.00):
         file = Path("./account_of_"+ name +".json")
         if file.is_file():
@@ -22,6 +33,11 @@ class BankAccount:
         self.save()
 
     def deposit(self, amount, description):
+        """
+            The function deposit will deposit an amount to an account and update its json data file.
+            :amount: the amount of cash
+            :description: The description of the action
+        """
         if isinstance(amount, (int, float)) == False:
             raise TypeError("The inserted amount is not numeric")
         self._balance += amount
@@ -29,6 +45,11 @@ class BankAccount:
         self.save()
 
     def withdraw(self, amount, description):
+        """
+            The function withdraw will withdraw an amount fram an account and update its json data file.
+            :amount: the amount of cash
+            :description: The description of the action
+        """
         if isinstance(amount, (int, float)) == False:
             raise TypeError("The inserted amount is not numeric")
         if amount > self._balance:
@@ -38,6 +59,12 @@ class BankAccount:
         self.save()
         
     def convert_then_withdraw(self, amount, currency, description):
+        """
+            The function convert_then_withdraw will convert an amount to a specific currency and withdraw from an account and update its json data file.
+            :amount: the amount of cash
+            :currency: the currency in which the amount should be converted
+            :description: The description of the action
+        """
         if isinstance(amount, (int, float)) == False:
             raise TypeError("The inserted amount is not numeric")
         
@@ -63,6 +90,12 @@ class BankAccount:
         self.save()
         
     def transfert(self, beneficiairy, amount, description):
+        """
+            The function transfer will transfert an amount from an account to another and update its json data file.
+            :beneficiairy: The beneciciairy of the transfert
+            :amount: the amount of cash
+            :description: The description of the action
+        """
         if isinstance(amount, (int, float)) == False:
             raise TypeError("The inserted amount is not numeric")
         if amount > self._balance:
